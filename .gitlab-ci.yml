@@ -94,19 +94,23 @@ before_script:
 # Job conditions
 #
 
-# run job only when a new tag is pushed for the cluster agent.
+# run job when building Datadog Cluster Agent release tag
 
 .run_on_cluster_agent_tag: &run_on_cluster_agent_tag
   only:
     refs:
-      - /^dca([\d.-]|rc)+$/
+      - tags
+    variables:
+      - $CI_COMMIT_TAG =~ /^dca([\d.-]|rc)+$/
 
-# skip job when a new tag is pushed for the cluster agent.
+# skip job when building Datadog Cluster Agent release tag
 
 .skip_on_cluster_agent_tag: &skip_on_cluster_agent_tag
   except:
     refs:
-      - /^dca([\d.-]|rc)+$/
+      - tags
+    variables:
+      - $CI_COMMIT_TAG =~ /^dca([\d.-]|rc)+$/
 
 #
 # source_test
