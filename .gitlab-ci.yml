@@ -101,7 +101,7 @@ before_script:
     refs:
       - tags
     variables:
-      - $CI_COMMIT_TAG =~ /^dca([\d.-]|rc)+$/
+      - $CI_COMMIT_TAG =~ /^dca-([\d.-]|rc)+$/
 
 # skip job when building Datadog Cluster Agent release tag
 
@@ -110,7 +110,7 @@ before_script:
     refs:
       - tags
     variables:
-      - $CI_COMMIT_TAG =~ /^dca([\d.-]|rc)+$/
+      - $CI_COMMIT_TAG =~ /^dca-([\d.-]|rc)+$/
 
 #
 # source_test
@@ -1064,7 +1064,7 @@ dca_tag_release:
   variables:
     <<: *docker_hub_variables
   script:
-    - inv -e docker.publish ${SRC_DCA}:${SRC_TAG} datadog/cluster-agent:${CI_COMMIT_TAG}
+    - inv -e docker.publish ${SRC_DCA}:${SRC_TAG} datadog/cluster-agent:${CI_COMMIT_TAG#$(echo "dca-")}
 
 dca_latest_release:
   <<: *docker_tag_job_definition
