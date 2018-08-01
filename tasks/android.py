@@ -164,10 +164,10 @@ def launchservice(ctx, api_key, hostname=None, tags=None):
         print("Setting tags to owner:db,env:local,role:windows")
         tags="owner:db,env:local,role:windows"
 
-    cmd = "adb shell am startservice org.datadog.agent/.DDService -e api_key {} -e hostname {} -e tags {}".format(api_key, hostname, tags)
+    cmd = "adb shell am startservice --es api_key {} --es hostname {} --es tags {} org.datadog.agent/.DDService".format(api_key, hostname, tags)
     ctx.run(cmd)
 
-@task
+@task   
 def stopservice(ctx):
     cmd = "adb shell am force-stop org.datadog.agent"
     ctx.run(cmd)
